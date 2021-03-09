@@ -40,6 +40,7 @@ class HomeTableViewController: UITableViewController {
             self.myRefreshControl.endRefreshing()
         }, failure: { (Error) in
             print("Could not retreve tweets! oh no!!")
+            print(Error.localizedDescription) //if api limit reached, error should be 429, just wait 15 mins
         })
     }
 
@@ -62,6 +63,12 @@ class HomeTableViewController: UITableViewController {
         }, failure: { (Error) in
             print("Could not retreve tweets! oh no!!")
         })
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row + 1 == tweetArray.count{
+            loadMoreTweets()
+        }
     }
     
 
